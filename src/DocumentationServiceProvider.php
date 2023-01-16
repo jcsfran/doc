@@ -14,18 +14,16 @@ class DocumentationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $viewPath = __DIR__ . '/../resources';
-        $this->loadViewsFrom($viewPath, 'api-docs');
+        // $viewPath = __DIR__ . '/../resources';
+        // $this->loadViewsFrom($viewPath, 'api-docs');
 
-        // Publish a config file
         $configPath = __DIR__ . '/../config/documentation.php';
         $this->publishes([
             $configPath => config_path('documentation.php'),
         ], 'config');
 
-        //Publish views
         $this->publishes([
-            __DIR__ . '/../resources' => base_path('resources/views/docs'),
+            __DIR__ . '/../resources' => base_path('resources/views/api-docs'),
         ], 'docs');
 
         //Include routes
