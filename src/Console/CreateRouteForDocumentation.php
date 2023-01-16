@@ -2,7 +2,7 @@
 
 namespace Julio\Swagger\Src\Console;
 
-use Julio\Swagger\DocumentationHelper;
+use Julio\Swagger\Src\DocumentationHelper;
 use Illuminate\Console\Command;
 
 class CreateRouteForDocumentation extends Command
