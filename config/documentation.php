@@ -14,4 +14,6 @@ return [
         'put' => './update.yaml',
         'delete' => './delete.yaml',
     ],
+
+    'key' => env('DOCS_KEY', ''),
 ];
