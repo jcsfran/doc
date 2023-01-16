@@ -2,7 +2,7 @@
 
 namespace Julio\Swagger\Src;
 
-use App\Services\Documentation\DocumentationStrategy;
+use Julio\Swagger\Src\DocumentationStrategy;
 use Symfony\Component\Yaml\Yaml;
 
 class DocumentationHelper
