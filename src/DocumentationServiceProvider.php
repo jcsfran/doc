@@ -25,7 +25,7 @@ class DocumentationServiceProvider extends ServiceProvider
 
         //Publish views
         $this->publishes([
-            __DIR__ . '/../resources' => base_path('resources/views'),
+            __DIR__ . '/../resources' => base_path('resources'),
         ], 'docs');
 
         //Include routes
