@@ -17,16 +17,17 @@ class DocumentationServiceProvider extends ServiceProvider
         // $viewPath = __DIR__ . '/../resources';
         // $this->loadViewsFrom($viewPath, 'api-docs');
         $configPath = __DIR__ . '/../config/documentation.php';
-        $l5SwaggerPatch = __DIR__ . '/../config/l5-swagger.php.php';
-
+        $l5SwaggerPatch = __DIR__ . '/../config/l5-swagger.php';
+        $viewsPath = __DIR__ . '/../resources/views';
         $this->publishes([
             $configPath => config_path('documentation.php'),
             $l5SwaggerPatch => config_path('l5-swagger.php'),
         ], 'config');
 
         $this->publishes([
-            __DIR__ . '/../resources' => base_path('resources/views/api-docs'),
-        ], 'docs');
+            $viewsPath . '/docs.blade.php' => base_path('resources/views/api-docs'),
+            $viewsPath . '/index.blade.php' => config('l5-swagger.defaults.paths.views'),
+        ], 'views');
 
         //Include routes
         // $this->loadRoutesFrom(__DIR__ . '/routes.php');

@@ -5,7 +5,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                'title' => 'Api Swagger Docs',
             ],
 
             'routes' => [
@@ -61,7 +61,7 @@ return [
              * Middleware allows to prevent unexpected access to API documentation
             */
             'middleware' => [
-                'api' => ['private'],
+                'api' => ['access_docs'],
                 'asset' => [],
                 'docs' => [],
                 'oauth2_callback' => [],
@@ -82,7 +82,7 @@ return [
             /*
              * Absolute path to directory where to export views
             */
-            'views' => base_path('resources/views/api-docs/views'),
+            'views' => base_path('resources/views/vendor/l5-swagger'),
 
             /*
              * Edit to set the api's base path
