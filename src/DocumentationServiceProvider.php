@@ -16,10 +16,11 @@ class DocumentationServiceProvider extends ServiceProvider
     {
         // $viewPath = __DIR__ . '/../resources';
         // $this->loadViewsFrom($viewPath, 'api-docs');
-
+        $l5SwaggerPatch = 'vendor/darkaonline/l5-swagger';
         $configPath = __DIR__ . '/../config/documentation.php';
         $this->publishes([
             $configPath => config_path('documentation.php'),
+            $l5SwaggerPatch => config_path('l5-swagger.php'),
         ], 'config');
 
         $this->publishes([
