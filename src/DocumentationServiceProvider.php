@@ -30,8 +30,8 @@ class DocumentationServiceProvider extends ServiceProvider
             $viewsPath . '/assets' => public_path('docs/assets'),
             $viewsPath . '/utils' => public_path('docs/utils'),
             $viewsPath . '/index.yaml' => public_path('docs/index.yaml'),
-            $viewsPath . '/components' => base_path('resources/views/patch-note'),
-            $viewsPath . '/../components' => base_path('app/Views/PatchNote'),
+            $viewsPath . '/components' => base_path('resources/views/components'),
+            $viewsPath . '/../components' => base_path('app/Views/Components'),
         ], 'views');
 
         //Include routes
