@@ -1,0 +1,17 @@
+{
+    "name": "julio/swagger",
+    "type": "library",
+    "require": {
+        "darkaonline/l5-swagger": "8.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Julio\\Swagger\\": ""
+        }
+    },
+    "authors": [
+        {
+            "name": "Julio Cesar Francisquini"
+        }
+    ]
+}
