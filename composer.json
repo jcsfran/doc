@@ -14,5 +14,12 @@
         {
             "name": "Julio Cesar Francisquini"
         }
-    ]
+    ],
+    "extra": {
+        "laravel": {
+          "providers": [
+                "Julio\\Swagger\\Src\\DocumentationServiceProvider"
+            ]
+        }
+    }
 }
