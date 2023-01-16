@@ -25,8 +25,8 @@ class DocumentationServiceProvider extends ServiceProvider
 
         //Publish views
         $this->publishes([
-            __DIR__ . '/../resources' => config('l5-swagger.defaults.paths.views'),
-        ], 'views');
+            __DIR__ . '/../resources' => base_path('resources/views'),
+        ], 'docs');
 
         //Include routes
         // $this->loadRoutesFrom(__DIR__ . '/routes.php');
