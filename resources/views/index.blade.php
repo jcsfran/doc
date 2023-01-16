@@ -2,8 +2,8 @@
 
 <head>
     <title>{{ config('app.name') }} | Api Documentation</title>
-    <link href="../assets/style.css" rel="stylesheet">
-    <link href="../assets/patch-notes.css" rel="stylesheet">
+    <link href="../docs/assets/style.css" rel="stylesheet">
+    <link href="../docs/assets/patch-notes.css" rel="stylesheet">
     </script>
 </head>
 
@@ -17,11 +17,11 @@
         </nav>
     </header>
     <div id="swagger-ui"></div>
-    <script src="../utils/jquery-2.1.4.min.js"></script>
-    <script src="../utils/swagger-bundle.js"></script>
+    <script src="../docs/utils/jquery-2.1.4.min.js"></script>
+    <script src="../docs/utils/swagger-bundle.js"></script>
     <script type="application/javascript">
         const ui = SwaggerUIBundle({
-            url: "../swagger/index.yaml",
+            url: "../docs/index.yaml",
             dom_id: '#swagger-ui',
             deepLinking: true,
         });
