@@ -29,7 +29,9 @@ class DocumentationServiceProvider extends ServiceProvider
             $viewsPath . '/views/index.blade.php' => config('l5-swagger.defaults.paths.views') . '/index.blade.php',
             $viewsPath . '/assets' => public_path('docs/assets'),
             $viewsPath . '/utils' => public_path('docs/utils'),
-            $viewsPath . 'index.yaml' => public_path('docs/index.yaml'),
+            $viewsPath . '/index.yaml' => public_path('docs/index.yaml'),
+            $viewsPath . '/components' => base_path('resources/views/patch-note'),
+            $viewsPath . '/../components' => base_path('app/Views/PatchNote'),
         ], 'views');
 
         //Include routes

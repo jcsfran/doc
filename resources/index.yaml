@@ -17,5 +17,3 @@ components:
 paths:
   #/route/name:
     $ref: #path to action file
-
-

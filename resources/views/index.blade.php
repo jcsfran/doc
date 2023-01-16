@@ -27,7 +27,7 @@
         });
     </script>
 
-    @inject('patchNotes', 'App\Services\DocumentationService')
+    @inject('patchNotes', 'Julio\Swagger\Src\DocumentationHelper')
 
     <h2 id="patch-notes">Patch Notes</h2>
 
