@@ -3,6 +3,7 @@
 namespace Julio\Swagger\Src;
 
 use Illuminate\Support\ServiceProvider;
+use Julio\Swagger\Src\Console\CreateRouteForDocumentation;
 
 class DocumentationServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,7 @@ class DocumentationServiceProvider extends ServiceProvider
         // $this->loadRoutesFrom(__DIR__ . '/routes.php');
 
         //Register commands
+        $this->commands([CreateRouteForDocumentation::class]);
     }
 
     /**
@@ -42,6 +44,10 @@ class DocumentationServiceProvider extends ServiceProvider
     {
         $configPath = __DIR__ . '/../config/documentation.php';
         $this->mergeConfigFrom($configPath, 'documentation');
+
+        $this->app->singleton('command.docs.route', function ($app) {
+            return $app->make(GenerateDocsCommand::class);
+        });
     }
 
     /**
