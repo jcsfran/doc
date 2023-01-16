@@ -14,8 +14,8 @@ class DocumentationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $viewPath = __DIR__ . '/../resources/views';
-        // $this->loadViewsFrom($viewPath, 'l5-swagger');
+        $viewPath = __DIR__ . '/../resources';
+        $this->loadViewsFrom($viewPath, 'api-docs');
 
         // Publish a config file
         $configPath = __DIR__ . '/../config/documentation.php';
