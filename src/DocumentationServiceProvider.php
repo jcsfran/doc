@@ -17,7 +17,7 @@ class DocumentationServiceProvider extends ServiceProvider
         // $viewPath = __DIR__ . '/../resources';
         // $this->loadViewsFrom($viewPath, 'api-docs');
         $configPath = __DIR__ . '/../config/documentation.php';
-        $configPath = __DIR__ . '/../config/l5-swagger.php.php';
+        $l5SwaggerPatch = __DIR__ . '/../config/l5-swagger.php.php';
 
         $this->publishes([
             $configPath => config_path('documentation.php'),
