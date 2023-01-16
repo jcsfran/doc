@@ -27,8 +27,9 @@ class DocumentationServiceProvider extends ServiceProvider
         $this->publishes([
             $viewsPath . '/views/docs.blade.php' => base_path('resources/views/api-docs') . '/docs.blade.php',
             $viewsPath . '/views/index.blade.php' => config('l5-swagger.defaults.paths.views') . '/index.blade.php',
-            $viewsPath . '/assets' => public_path('docs'),
-            $viewsPath . '/utils' => public_path('docs'),
+            $viewsPath . '/assets' => public_path('docs/assets'),
+            $viewsPath . '/utils' => public_path('docs/utils'),
+            $viewsPath . 'index.yaml' => public_path('docs/index.yaml'),
         ], 'views');
 
         //Include routes
