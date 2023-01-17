@@ -23,7 +23,7 @@ php artisan vendor:publish --provider "Julio\Swagger\Src\DocumentationServicePro
 Altere os arquivos de `documentation.php` ou `l5-swagger.php`
 
 #### Rota de acesso
-Para configurar o nome da rota de acesso da documentação, entre no arquivo `l5-swagger.php` e altere a
+Para configurar o nome da rota de acesso da documentação, entre no arquivo `l5-swagger.php` e altere
 ```php
 'routes' => [
   'api' => rotaDeAcesso
@@ -34,7 +34,7 @@ Adicione o middleware de segurança na variável `$routeMiddleware` em `Http/Ker
 ```php
 'access_docs' => \Julio\Swagger\Src\ValidateAccessDocumentationRoute::class,
 ```
-Acesse o arquivo `l5-swagger.php` e altere a
+Acesse o arquivo `l5-swagger.php` e adicione o `access_docs`
 ```php
 'middleware' => [
   'api' => ['access_docs'],
