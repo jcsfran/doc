@@ -12,7 +12,11 @@ class CreateRouteForDocumentation extends Command
      *
      * @var string
      */
-    protected $signature = 'docs:route {path} {--index} {--show} {--post} {--put} {--delete} {--auth}';
+    protected $signature = 'docs:route
+                            {path : "file path, use : to pass parameters"}
+                            {action* : array with the actions to be created}
+                            {--name=* : name of each action file}
+                            {--a|auth : whether to have authentication}';
 
     /**
      * The console command description.
@@ -21,10 +25,8 @@ class CreateRouteForDocumentation extends Command
      */
     protected $description = 'Create new file with your actions';
 
-    public function __construct(DocumentationHelper $service)
+    public function __construct(private DocumentationHelper $documentationHelper)
     {
-        $this->documentationHelper = $service;
-
         parent::__construct();
     }
 
@@ -35,8 +37,8 @@ class CreateRouteForDocumentation extends Command
      */
     public function handle()
     {
-        $options = $this->checkOptionsReported();
-        $this->checkIfAtLeastOneActionWasReported(options: $options);
+        $this->checkIfAtLeastOneActionWasReported();
+        $this->checkOptionsReported();
 
         $path = $this
             ->documentationHelper
@@ -50,41 +52,40 @@ class CreateRouteForDocumentation extends Command
         return $this->info('Created file: ' . $path);
     }
 
-    private function checkOptionsReported(): array
+    private function checkOptionsReported(): void
     {
-        $options = [];
-        if ($this->option('index')) {
-            $options[] = 'index';
-        }
+        $validActions = [
+            'index',
+            'show',
+            'store',
+            'update',
+            'destroy'
+        ];
 
-        if ($this->option('show')) {
-            $options[] = 'show';
-        }
+        foreach ($this->argument('action') as $action) {
+            if (!in_array($action, $validActions)) {
+                $message = $this->error(
+                    'This action is invalid: ' . $action
+                );
 
-        if ($this->option('post')) {
-            $options[] = 'post';
-        }
+                $message .= $this->alert(
+                    '--index --show --store --update or --destroy'
+                );
 
-        if ($this->option('put')) {
-            $options[] = 'put';
+                exit;
+            }
         }
-
-        if ($this->option('delete')) {
-            $options[] = 'delete';
-        }
-
-        return $options;
     }
 
-    private function checkIfAtLeastOneActionWasReported(array $options): void
+    private function checkIfAtLeastOneActionWasReported(): void
     {
-        if (empty($options)) {
+        if (empty($this->argument('action'))) {
             $message = $this->error(
                 'Please select at least one action.'
             );
 
             $message .= $this->alert(
-                '--index --show --post --put or --delete'
+                '--index --show --store --update or --destroy'
             );
 
             exit;

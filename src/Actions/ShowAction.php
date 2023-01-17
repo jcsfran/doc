@@ -2,27 +2,35 @@
 
 namespace Julio\Swagger\Src\Actions;
 
-use Julio\Swagger\Src\Contracts\Action;
-use Julio\Swagger\Src\Contracts\DocumentationInterface;
+use Julio\Swagger\Src\Contracts\{
+    Action,
+    DocumentationInterface,
+};
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class ShowAction extends Action implements DocumentationInterface
 {
-    public function struct(bool $auth, string $path, array $params): string
+    public function struct(bool $auth, string $path, array $params, string $name): string
     {
         $structuredYaml = str_repeat(config('documentation.space'), 4) . "get:" . PHP_EOL;
         $structuredYaml .=
             str_repeat(config('documentation.space'), 6) .
-            '$ref: ' .
-            config('documentation.actions.show') .
+            '$ref: ./' .
+            $name .
+            '.yaml' .
             PHP_EOL;
 
-        $this->createStructure(auth: $auth, path: $path, params: $params);
+        $this->createStructure(
+            auth: $auth,
+            path: $path,
+            params: $params,
+            name: $name
+        );
 
         return $structuredYaml;
     }
 
-    public function createStructure(bool $auth, string $path, array $params): void
+    public function createStructure(bool $auth, string $path, array $params, string $name): void
     {
         $structure = PHP_EOL;
 
@@ -46,7 +54,7 @@ class ShowAction extends Action implements DocumentationInterface
         }
 
         $this->basicStructure->createFile(
-            fileName: config('documentation.actions.show'),
+            fileName: './' . $name . '.yaml',
             structure: $structure,
             path: $path
         );

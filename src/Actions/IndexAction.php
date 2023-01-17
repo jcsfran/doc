@@ -2,25 +2,29 @@
 
 namespace Julio\Swagger\Src\Actions;
 
-use Julio\Swagger\Src\Contracts\Action;
-use Julio\Swagger\Src\Contracts\DocumentationInterface;
+use Julio\Swagger\Src\Contracts\{
+    Action,
+    DocumentationInterface,
+};
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class IndexAction extends Action implements DocumentationInterface
 {
-    public function struct(bool $auth, string $path, array $params): string
+    public function struct(bool $auth, string $path, array $params, $name): string
     {
         $structuredYaml = str_repeat(config('documentation.space'), 4) . "get:" . PHP_EOL;
         $structuredYaml .=
             str_repeat(config('documentation.space'), 6) .
-            '$ref: ' .
-            config('documentation.actions.index') .
+            '$ref: ./' .
+            $name .
+            '.yaml' .
             PHP_EOL;
 
         $this->createStructure(
             auth: $auth,
             path: $path,
-            params: $params
+            params: $params,
+            name: $name
         );
 
         return $structuredYaml;
@@ -62,7 +66,7 @@ class IndexAction extends Action implements DocumentationInterface
         return $structure;
     }
 
-    public function createStructure(bool $auth, string $path, array $params): void
+    public function createStructure(bool $auth, string $path, array $params, string $name): void
     {
         $structure = PHP_EOL;
 
@@ -70,10 +74,7 @@ class IndexAction extends Action implements DocumentationInterface
             $structure .= $this->authStructure->header();
         }
 
-        if (!empty($params)) {
-            $structure .= $this->paramsStructure->header(params: $params);
-        }
-
+        $structure .= $this->paramsStructure->headerPaginate(params: $params);
         $structure .= $this->bodyStructure();
 
         if ($auth) {
@@ -85,7 +86,7 @@ class IndexAction extends Action implements DocumentationInterface
         }
 
         $this->basicStructure->createFile(
-            fileName: config('documentation.actions.index'),
+            fileName: './' . $name . '.yaml',
             structure: $structure,
             path: $path
         );

@@ -2,9 +2,11 @@
 
 namespace Julio\Swagger\Src\Contracts;
 
-use Julio\Swagger\Src\Structures\BasicStructure;
-use Julio\Swagger\Src\Structures\AuthStructure;
-use Julio\Swagger\Src\Structures\ParamsStructure;
+use Julio\Swagger\Src\Structures\{
+    BasicStructure,
+    AuthStructure,
+    ParamsStructure,
+};
 
 abstract class Action
 {

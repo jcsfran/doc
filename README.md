@@ -17,7 +17,7 @@ Após a instalação do pacote, será preciso publicar os arquivos para que a do
 php artisan vendor:publish --provider "Julio\Swagger\Src\DocumentationServiceProvider"
 
 ```
-![image](https://user-images.githubusercontent.com/87837834/212916954-6169d86f-abcf-487b-9939-8e8ece6fb91c.png)
+![image](https://user-images.githubusercontent.com/87837834/212961051-89acb1ef-ff52-4bdb-ae41-e927cd1c6e24.png)
 
 ### Configurações
 Altere os arquivos de `documentation.php` ou `l5-swagger.php`

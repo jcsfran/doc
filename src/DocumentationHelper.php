@@ -21,7 +21,7 @@ class DocumentationHelper
         return array_reverse($data);
     }
 
-    public function createAction(string $originalPath, array $options, bool $auth)
+    public function createAction(string $originalPath, array $options, bool $auth, array $names): string
     {
         $path = str_replace(
             config('documentation.parameter_identify'),
@@ -37,7 +37,8 @@ class DocumentationHelper
             auth: $auth,
             options: $options,
             path: $path,
-            params: $params
+            params: $params,
+            names: $names
         );
 
 
@@ -83,7 +84,7 @@ class DocumentationHelper
         }
     }
 
-    private function structure(bool $auth, array $options, string $path, array $params): string
+    private function structure(bool $auth, array $options, string $path, array $params, array $names): string
     {
         $structure = PHP_EOL;
         $documentationStrategy = new DocumentationStrategy();
@@ -92,7 +93,8 @@ class DocumentationHelper
             options: $options,
             auth: $auth,
             path: $path,
-            params: $params
+            params: $params,
+            names: $names
         );
 
         return $structure;

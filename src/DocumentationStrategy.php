@@ -2,26 +2,26 @@
 
 namespace Julio\Swagger\Src;
 
-use Julio\Swagger\Src\Actions\DeleteAction;
+use Julio\Swagger\Src\Actions\DestroyAction;
 use Julio\Swagger\Src\Actions\IndexAction;
-use Julio\Swagger\Src\Actions\PostAction;
-use Julio\Swagger\Src\Actions\PutAction;
+use Julio\Swagger\Src\Actions\StoreAction;
+use Julio\Swagger\Src\Actions\UpdateAction;
 use Julio\Swagger\Src\Actions\ShowAction;
 
 class DocumentationStrategy
 {
-    private DeleteAction $delete;
+    private DestroyAction $delete;
     private IndexAction $index;
-    private PostAction $post;
-    private PutAction $put;
+    private StoreAction $post;
+    private UpdateAction $put;
     private ShowAction $show;
 
     public function __construct()
     {
-        $this->delete = new DeleteAction();
+        $this->delete = new DestroyAction();
         $this->index = new IndexAction();
-        $this->post = new PostAction();
-        $this->put = new PutAction();
+        $this->post = new StoreAction();
+        $this->put = new UpdateAction();
         $this->show = new ShowAction();
     }
 
@@ -30,13 +30,21 @@ class DocumentationStrategy
         bool $auth,
         string $path,
         array $params,
-        string $structure = null
+        array $names
     ): string {
-        foreach ($options as $option) {
+        $structure = null;
+        foreach ($options as $index => $option) {
+            $name = $option;
+
+            if (isset($names[$index])) {
+                $name = $names[$index];
+            }
+
             $structure .= $this->{$option}->struct(
                 auth: $auth,
                 path: $path,
                 params: $params,
+                name: $name
             );
         }
 

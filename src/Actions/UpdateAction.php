@@ -2,31 +2,35 @@
 
 namespace Julio\Swagger\Src\Actions;
 
-use Julio\Swagger\Src\Contracts\Action;
-use Julio\Swagger\Src\Contracts\DocumentationInterface;
+use Julio\Swagger\Src\Contracts\{
+    Action,
+    DocumentationInterface,
+};
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
-class PostAction extends Action implements DocumentationInterface
+class UpdateAction extends Action implements DocumentationInterface
 {
-    public function struct(bool $auth, string $path, array $params): string
+    public function struct(bool $auth, string $path, array $params, string $name): string
     {
-        $structuredYaml = str_repeat(config('documentation.space'), 4) . "post:" . PHP_EOL;
+        $structuredYaml = str_repeat(config('documentation.space'), 4) . "put:" . PHP_EOL;
         $structuredYaml .=
             str_repeat(config('documentation.space'), 6) .
-            '$ref: ' .
-            config('documentation.actions.post') .
+            '$ref: ./' .
+            $name .
+            '.yaml' .
             PHP_EOL;
 
         $this->createStructure(
             auth: $auth,
             path: $path,
-            params: $params
+            params: $params,
+            name: $name
         );
 
         return $structuredYaml;
     }
 
-    public function createStructure(bool $auth, string $path, array $params): void
+    public function createStructure(bool $auth, string $path, array $params, string $name): void
     {
         $structure = PHP_EOL;
 
@@ -39,7 +43,7 @@ class PostAction extends Action implements DocumentationInterface
         }
 
         $structure .= $this->basicStructure->info();
-        $structure .= $this->basicStructure->response(statusCode: HttpResponse::HTTP_CREATED);
+        $structure .= $this->basicStructure->response(statusCode: HttpResponse::HTTP_NO_CONTENT);
 
         if ($auth) {
             $structure .= $this->authStructure->response();
@@ -52,7 +56,7 @@ class PostAction extends Action implements DocumentationInterface
         $structure .= $this->basicStructure->body();
 
         $this->basicStructure->createFile(
-            fileName: config('documentation.actions.post'),
+            fileName: './' . $name . '.yaml',
             structure: $structure,
             path: $path
         );

@@ -2,31 +2,35 @@
 
 namespace Julio\Swagger\Src\Actions;
 
-use Julio\Swagger\Src\Contracts\Action;
-use Julio\Swagger\Src\Contracts\DocumentationInterface;
+use Julio\Swagger\Src\Contracts\{
+    Action,
+    DocumentationInterface,
+};
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
-class DeleteAction extends Action implements DocumentationInterface
+class DestroyAction extends Action implements DocumentationInterface
 {
-    public function struct(bool $auth, string $path, array $params): string
+    public function struct(bool $auth, string $path, array $params, string $name): string
     {
         $structuredYaml = str_repeat(config('documentation.space'), 4) . "delete:" . PHP_EOL;
         $structuredYaml .=
             str_repeat(config('documentation.space'), 6) .
-            '$ref: ' .
-            config('documentation.actions.delete') .
+            '$ref: ./' .
+            $name .
+            '.yaml' .
             PHP_EOL;
 
         $this->createStructure(
             auth: $auth,
             path: $path,
-            params: $params
+            params: $params,
+            name: $name
         );
 
         return $structuredYaml;
     }
 
-    public function createStructure(bool $auth, string $path, array $params): void
+    public function createStructure(bool $auth, string $path, array $params, string $name): void
     {
         $structure = PHP_EOL;
 
@@ -50,7 +54,7 @@ class DeleteAction extends Action implements DocumentationInterface
         }
 
         $this->basicStructure->createFile(
-            fileName: config('documentation.actions.delete'),
+            fileName: './' . $name . '.yaml',
             structure: $structure,
             path: $path
         );
