@@ -41,32 +41,4 @@ class DocumentationServiceProvider extends ServiceProvider
             PatchNoteCommand::class,
         ]);
     }
-
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $configPath = __DIR__ . '/../config/documentation.php';
-        $this->mergeConfigFrom($configPath, 'documentation');
-
-        $this->app->singleton('command.docs.route', function ($app) {
-            return $app->make(CreateRouteForDocumentation::class);
-        });
-        $this->app->singleton('command.docs.patch', function ($app) {
-            return $app->make(CreateRouteForDocumentation::class);
-        });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [];
-    }
 }
