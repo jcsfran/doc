@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'patch_notes_path' => public_path('swagger/versions'),
+    'patch_notes_path' => public_path('docs/versions'),
     'space' => "\x20",
-    'route_path' => public_path('swagger/routes'),
+    'route_path' => public_path('docs/routes'),
     'parameter_identify' => ':',
     'default_main_yaml' => '/actions.yaml',
 

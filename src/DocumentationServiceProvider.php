@@ -33,7 +33,7 @@ class DocumentationServiceProvider extends ServiceProvider
             $viewsPath . '/index.yaml' => public_path('docs/index.yaml'),
             $viewsPath . '/components' => base_path('resources/views/components'),
             $viewsPath . '/../components' => base_path('app/Views/Components'),
-            $viewsPath . '/responses' => public_path('swagger/responses'),
+            $viewsPath . '/responses' => public_path('docs/responses'),
         ], 'views');
 
         $this->commands([
