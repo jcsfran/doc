@@ -17,13 +17,11 @@ class DocumentationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $configPath = __DIR__ . '/../config/documentation.php';
-        $l5SwaggerPatch = __DIR__ . '/../config/l5-swagger.php';
+        $configPath = __DIR__ . '/../config';
         $resourcesPath = __DIR__ . '/../resources';
 
         $this->publishes([
-            $configPath => config_path('documentation.php'),
-            $l5SwaggerPatch => config_path('l5-swagger.php'),
+            $configPath => config_path(),
             $resourcesPath . '/views/index.blade.php' => config('l5-swagger.defaults.paths.views') . '/index.blade.php',
 
             $resourcesPath . '/views/docs.blade.php' => base_path('resources/views/api-docs') . '/docs.blade.php',
