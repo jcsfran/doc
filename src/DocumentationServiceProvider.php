@@ -3,7 +3,10 @@
 namespace Julio\Swagger\Src;
 
 use Illuminate\Support\ServiceProvider;
-use Julio\Swagger\Src\Console\CreateRouteForDocumentation;
+use Julio\Swagger\Src\Console\{
+    CreateRouteForDocumentation,
+    PatchNoteCommand,
+};
 
 class DocumentationServiceProvider extends ServiceProvider
 {
@@ -30,9 +33,13 @@ class DocumentationServiceProvider extends ServiceProvider
             $viewsPath . '/index.yaml' => public_path('docs/index.yaml'),
             $viewsPath . '/components' => base_path('resources/views/components'),
             $viewsPath . '/../components' => base_path('app/Views/Components'),
+            $viewsPath . '/responses' => public_path('swagger/responses'),
         ], 'views');
 
-        $this->commands([CreateRouteForDocumentation::class]);
+        $this->commands([
+            CreateRouteForDocumentation::class,
+            PatchNoteCommand::class,
+        ]);
     }
 
     /**
@@ -46,7 +53,10 @@ class DocumentationServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($configPath, 'documentation');
 
         $this->app->singleton('command.docs.route', function ($app) {
-            return $app->make(GenerateDocsCommand::class);
+            return $app->make(CreateRouteForDocumentation::class);
+        });
+        $this->app->singleton('command.docs.patch', function ($app) {
+            return $app->make(CreateRouteForDocumentation::class);
         });
     }
 
