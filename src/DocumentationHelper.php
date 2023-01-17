@@ -10,6 +10,11 @@ class DocumentationHelper
     public function getPatchNotes(): array
     {
         $path = config('documentation.patch_notes_path');
+
+        if (!is_dir($path)) {
+            mkdir($path, 755, true);
+        }
+
         $fileNames = scandir($path);
         $fileNames = array_diff(scandir($path), array('.', '..'));
         $data = [];
