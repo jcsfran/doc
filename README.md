@@ -33,18 +33,17 @@ Adicione o middleware de segurança na variável `$routeMiddleware` em `Http/Ker
 ```
 'access_docs' => \Julio\Swagger\Src\ValidateAccessDocumentationRoute::class,
 ```
-
 Acesse o arquivo `l5-swagger.php` e altere a
 ```
 'middleware' => [
   'api' => ['access_docs'],
 ],
 ```
-
 No arquivo de rotas `web.php` adicione a rota e sua view
+```
 Route::view('/access-docs', 'api-docs.docs')
     ->name('access-docs');
-
+```
 E adicione a variável `DOCS_KEY` na .env com a sua senha da documentação
 
 ## Começando
