@@ -1,76 +1,112 @@
 # Swagger
 
-## Description
+## Descrição
 
-Lista todas as rotas da api com suas respectivas requisições e respostas 
+Padroniza a documentação das rotas do projeto e cria os arquivos da documentação através do terminal. Os arquivos criados são do tipo **.yaml**.
 
-## Getting started
+Desenvolvido para o [Laravel](https://laravel.com/). Esse pacote usa como base o [L5-Swagger](https://github.com/DarkaOnLine/L5-Swagger).
 
-### How to run
 
-Use um dos seguintes comandos para gerar os arquivos necessários
 
+## Começando
+Os nomes dos arquivos .yaml utilizam o mesmo padrão do nomes dos métodos do controller (index, store, show, update e destroy), esses nomes são chamados de `Actions` nesta documentação.
+
+- A index e a show utilizam o método `GET`
+- O store utiliza o método `POST`
+- O upate utiliza o método `PUT`
+- O destroy utiliza o método `DELETE`
+
+Cada **Action** possui sua configuração base de arquivo.
+
+## Comandos
+Use um dos comandos abaixo para criar um arquivo chamado **actions.yaml**, utilize o caminho retornado no terminal e o coloque como referência na área de **paths**
+``` 
+paths:
+  /caminhoDaRota:
+    $ref: caminhoDoArquivo/actions.yaml
 ```
-- `php artisan docs:route route/:id index store show update destroy --auth` comando completo
-- `php artisan docs:route route index store show update destroy --auth` sem parâmetro
-- `php artisan docs:route route index store show update destroy` sem autenticação
-- `php artisan docs:route route index` cria somente o método index
+
+### Comandos básicos
 - `php artisan docs:route route store` cria somente o método store
-- `php artisan docs:route route show` cria somente o método show, sem parâmetro
-- `php artisan docs:route route/:id show` cria somente o método show, com parâmetro
+- `php artisan docs:route route index` cria somente o método index
+- `php artisan docs:route route show` cria somente o método show
 - `php artisan docs:route route update` cria somente o método update
 - `php artisan docs:route route destroy` cria somente o método destroy
+
+### Parâmetros
+Utilize o `:` para indicar o nome do parâmetro, pode ser adicionado mais de um parâmetro
+
+Quando um parametro é informado, ele é adicionado automaticamente na Action que o acompanha
+
+- `php artisan docs:route route/:id show`
+
+Estrutura da pasta
+```
+ ------------------
+|- route
+|-- id
+|--- actions.yaml
+|--- show.yaml
+ ------------------
 ```
 
-#### Actions
+### Autenticação
+Adicione o `--auth` para indicar que a rota precisa de um token de autenticação para ser utilizada pelo front-end
+
+- `php artisan docs:route route show --auth`
+
+### Comando completo
+- `php artisan docs:route route/:id index store show update destroy --auth` comando completo
+
 ```
-- `index` gera um arquivo com o método get e com o retorno padrão de uma index
-- `show` gera um arquivo com o método get e com o retorno padrão de um show
-- `store` gera um arquivo com o método post e com o corpo e retorno padrão de uma store
-- `update` gera um arquivo com o método put e com o corpo e retorno padrão de um update (update)
-- `destroy` gera um arquivo com o método delete e com o retorno padrão de um destroy
+ ------------------
+|- route
+|-- id
+|--- actions.yalm
+|--- index.yalm
+|--- store.yalm
+|--- show.yalm
+|--- update.yalm
+|--- destroy.yalm
+ ------------------
 ```
 
-#### Rename file names
+### Observações
+Não é possivel ter dois arquivos com o mesmo metodo na mesma pasta. Então a **index** e a **show** não podem ficar na mesma pasta e no mesmo arquivo **actions.yalm**
+
+### Actions
+
+- `index` gera um arquivo com o método get e com o retorno paginado
+- `show` gera um arquivo com o método get e com o os status corretos de uma show
+- `store` gera um arquivo com o método post e com o as validações da requisição, exemplos de requisições e com seu status code 201
+- `update` gera um arquivo com o método put e com o as validações da requisição, exemplos de requisições e com seu status code 204
+- `destroy` gera um arquivo com o método delete e com o status code 204
+
+### Renomear os nomes dos arquivos
 ```
-- `php artisan docs:route route/:id store --name=login` gera um arquivo com o método post mas com o nome login.yaml
-- `php artisan docs:route route/:id store show --name=login --name=me` gera um arquivo com o método post mas com o nome login.yaml e um arquivo no método get com o nome me.yaml
+- `php artisan docs:route route/:id store --name=login` gera um arquivo com o método post, mas com o nome login.yaml
+- `php artisan docs:route route/:id store show --name=login --name=me` gera um arquivo com o método post, mas com o nome login.yaml e um arquivo no método get com o nome me.yaml
 ```
 
-Cada nome deve ser passado utilizando o **--name=** e na mesma ordem que foi informado as actions
-Se o nome não é informado, o arquivo ficará com o nome da ação
+Cada nome deve ser passado utilizando o `--name=` e na mesma ordem que foi informado as actions
 
-#### Auth
+Se o nome não é informado, o arquivo ficará com o nome da Action
+
+### Auth
 Por padrão os métodos que serão autenticados precisam estar acompanhados do `--auth` ou `-a`
 
+Quando for informado, o código de autenticação sera inserido na Action informada
+
 ```
-- `php artisan docs:route routePath index store show update destroy --a` adiciona o autenticador nos arquivos de cada método informado
+- `php artisan docs:route routePath index store show update destroy --a` adiciona o autenticador nos arquivos de cada Action informada
 - `php artisan docs:route routePath index -a` adiciona o autenticador somente no método informado
 ```
 
-##### Tip
-Caso tenha alguma rota que precisa ser autenticada, siga os seguintes passos:
-
-```
-- `php artisan docs:route route index` sem autenticar
-- `php artisan docs:route route store --a` adiciona o autenticador somente no método informado e não apaga o código gerado em sua actions.yaml
-```
-
-#### Parameters
-Pode-se executar o comando com mais de um parâmetro na url
-
-```
-- `php artisan docs:route route/:routeId/:id index` irá criar o caminho `route/routeId/id/actions.yaml`
-- `php artisan docs:route route/:routeId/description/:descriptionId index` irá criar o caminho `route/routeId/description/descriptionId/actions.yaml`
-```
-
-Por padrão os nomes dos parâmetros já serão adicionados em seus respectivos arquivo.yaml
-
-### Patch Notes
+## Notas de atualização
 As notas de atualização servem para armazenar o histórico de atualização de sua documentação
 
-#### How to run
+### Como rodar
 ```
-- `php artisan docs:patch NomeDaAtualizacao` irá a estrutura da nota de atualização
+- `php artisan docs:patch NomeDaAtualizacao` irá criar estrutura da nota de atualização
 - `php artisan docs:patch NomeDaAtualizacao --routes=2` irá a estrutura da nota de atualização com descrição para duas rotas
 ```
