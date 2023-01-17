@@ -11,8 +11,8 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#swagger-ui">Swagger</a></li>
-                <li><a href="#patch-notes">Patch Notes</a></li>
+                <li><a href="#swagger-ui">Rotas</a></li>
+                <li><a href="#patch-notes">Notas de atualização</a></li>
             </ul>
         </nav>
     </header>
@@ -29,7 +29,7 @@
 
     @inject('patchNotes', 'Julio\Swagger\Src\DocumentationHelper')
 
-    <h2 id="patch-notes">Patch Notes</h2>
+    <h2 id="patch-notes">Notas de atualização</h2>
 
     @forelse ($patchNotes->getPatchNotes() as $patch)
         <x-patch-note.div-patch-note :value="$patch" />
@@ -40,8 +40,7 @@
     <footer>
         <div>
             <p>
-                <span>LABI9</span> Tecnologia da Informação ©
-                2022 - Todos os direitos reservados.
+                <span>LABI9</span> Tecnologia da Informação © {{ date('Y') }} - Todos os direitos reservados.
             </p>
         </div>
     </footer>
