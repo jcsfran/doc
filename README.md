@@ -6,7 +6,46 @@ Padroniza a documentação das rotas do projeto e cria os arquivos da documenta�
 
 Desenvolvido para o [Laravel](https://laravel.com/). Esse pacote usa como base o [L5-Swagger](https://github.com/DarkaOnLine/L5-Swagger).
 
+## Instalação
+```
+composer require julio/swagger
+```
 
+Após a instalação do pacote, será preciso publicar os arquivos para que a documentação funcione
+
+```
+php artisan vendor:publish --provider "Julio\Swagger\Src\DocumentationServiceProvider"
+
+```
+![image](https://user-images.githubusercontent.com/87837834/212916954-6169d86f-abcf-487b-9939-8e8ece6fb91c.png)
+
+### Configurações
+Altere os arquivos de `documentation.php` ou `l5-swagger.php`
+#### Rota de acesso
+Para configurar o nome da rota de acesso da documentação, entre no arquivo `l5-swagger.php` e altere a
+```
+'routes' => [
+  'api' => rotaDeAcesso
+]
+```
+#### Middleware de segurança
+Adicione o middleware de segurança na variável `$routeMiddleware` em `Http/Kernel.php`
+```
+'access_docs' => \Julio\Swagger\Src\ValidateAccessDocumentationRoute::class,
+```
+
+Acesse o arquivo `l5-swagger.php` e altere a
+```
+'middleware' => [
+  'api' => ['access_docs'],
+],
+```
+
+No arquivo de rotas `web.php` adicione a rota e sua view
+Route::view('/access-docs', 'api-docs.docs')
+    ->name('access-docs');
+
+E adicione a variável `DOCS_KEY` na .env com a sua senha da documentação
 
 ## Começando
 Os nomes dos arquivos .yaml utilizam o mesmo padrão do nomes dos métodos do controller (index, store, show, update e destroy), esses nomes são chamados de `Actions` nesta documentação.
@@ -25,7 +64,6 @@ paths:
   /caminhoDaRota:
     $ref: caminhoDoArquivo/actions.yaml
 ```
-
 ### Comandos básicos
 - `php artisan docs:route route store` cria somente o método store
 - `php artisan docs:route route index` cria somente o método index
@@ -36,7 +74,7 @@ paths:
 ### Parâmetros
 Utilize o `:` para indicar o nome do parâmetro, pode ser adicionado mais de um parâmetro
 
-Quando um parametro é informado, ele é adicionado automaticamente na Action que o acompanha
+Quando um parâmetro é informado, ele é adicionado automaticamente na Action que o acompanha
 
 - `php artisan docs:route route/:id show`
 
@@ -107,6 +145,6 @@ As notas de atualização servem para armazenar o histórico de atualização de
 
 ### Como rodar
 ```
-- `php artisan docs:patch NomeDaAtualizacao` irá criar estrutura da nota de atualização
-- `php artisan docs:patch NomeDaAtualizacao --routes=2` irá a estrutura da nota de atualização com descrição para duas rotas
+- `php artisan docs:patch nome` irá criar estrutura da nota de atualização
+- `php artisan docs:patch nome --routes=2` irá a estrutura da nota de atualização com descrição para duas rotas
 ```

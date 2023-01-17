@@ -21,8 +21,10 @@ class CreateRouteForDocumentation extends Command
      */
     protected $description = 'Create new file with your actions';
 
-    public function __construct()
+    public function __construct(DocumentationService $service)
     {
+        $this->documentationService = $service;
+
         parent::__construct();
     }
 
@@ -34,11 +36,16 @@ class CreateRouteForDocumentation extends Command
     public function handle()
     {
         $options = $this->checkOptionsReported();
-
         $this->checkIfAtLeastOneActionWasReported(options: $options);
 
-        $documentationHelper = new  DocumentationHelper();
-        $path = $documentationHelper->test();
+        $path = $this
+            ->documentationService
+            ->createAction(
+                originalPath: $this->argument('path'),
+                options: $this->argument('action'),
+                auth: $this->option('auth'),
+                names: $this->option('name')
+            );
 
         return $this->info('Created file: ' . $path);
     }
