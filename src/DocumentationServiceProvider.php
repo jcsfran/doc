@@ -14,8 +14,6 @@ class DocumentationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $viewPath = __DIR__ . '/../resources';
-        // $this->loadViewsFrom($viewPath, 'api-docs');
         $configPath = __DIR__ . '/../config/documentation.php';
         $l5SwaggerPatch = __DIR__ . '/../config/l5-swagger.php';
         $viewsPath = __DIR__ . '/../resources';
@@ -34,10 +32,6 @@ class DocumentationServiceProvider extends ServiceProvider
             $viewsPath . '/../components' => base_path('app/Views/Components'),
         ], 'views');
 
-        //Include routes
-        // $this->loadRoutesFrom(__DIR__ . '/routes.php');
-
-        //Register commands
         $this->commands([CreateRouteForDocumentation::class]);
     }
 
