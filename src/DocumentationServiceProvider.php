@@ -30,10 +30,7 @@ class DocumentationServiceProvider extends ServiceProvider
             $resourcesPath . '/components' => base_path('resources/views/components'),
             $resourcesPath . '/../components' => base_path('app/Views/Components'),
 
-            $resourcesPath . '/assets' => public_path('docs/assets'),
-            $resourcesPath . '/utils' => public_path('docs/utils'),
-            $resourcesPath . '/index.yaml' => public_path('docs/index.yaml'),
-            $resourcesPath . '/responses' => public_path('docs/responses'),
+            $resourcesPath . '/docs' => public_path('docs'),
         ]);
 
         $this->commands([
