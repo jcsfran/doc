@@ -7,13 +7,13 @@ Padroniza a documentação das rotas do projeto e cria os arquivos da documenta�
 Desenvolvido para o [Laravel](https://laravel.com/). Esse pacote usa como base o [L5-Swagger](https://github.com/DarkaOnLine/L5-Swagger).
 
 ## Instalação
-```
+```console
 composer require julio/swagger
 ```
 
 Após a instalação do pacote, será preciso publicar os arquivos para que a documentação funcione
 
-```
+```console
 php artisan vendor:publish --provider "Julio\Swagger\Src\DocumentationServiceProvider"
 
 ```
@@ -21,26 +21,27 @@ php artisan vendor:publish --provider "Julio\Swagger\Src\DocumentationServicePro
 
 ### Configurações
 Altere os arquivos de `documentation.php` ou `l5-swagger.php`
+
 #### Rota de acesso
 Para configurar o nome da rota de acesso da documentação, entre no arquivo `l5-swagger.php` e altere a
-```
+```php
 'routes' => [
   'api' => rotaDeAcesso
 ]
 ```
 #### Middleware de segurança
 Adicione o middleware de segurança na variável `$routeMiddleware` em `Http/Kernel.php`
-```
+```php
 'access_docs' => \Julio\Swagger\Src\ValidateAccessDocumentationRoute::class,
 ```
 Acesse o arquivo `l5-swagger.php` e altere a
-```
+```php
 'middleware' => [
   'api' => ['access_docs'],
 ],
 ```
 No arquivo de rotas `web.php` adicione a rota e sua view
-```
+```php
 Route::view('/access-docs', 'api-docs.docs')
     ->name('access-docs');
 ```
@@ -58,7 +59,7 @@ Cada **Action** possui sua configuração base de arquivo.
 
 ## Comandos
 Use um dos comandos abaixo para criar um arquivo chamado **actions.yaml**, utilize o caminho retornado no terminal e o coloque como referência na área de **paths**
-``` 
+``` yaml
 paths:
   /caminhoDaRota:
     $ref: caminhoDoArquivo/actions.yaml
@@ -95,6 +96,7 @@ Adicione o `--auth` para indicar que a rota precisa de um token de autenticaçã
 ### Comando completo
 - `php artisan docs:route route/:id index store show update destroy --auth` comando completo
 
+Estrutura da pasta
 ```
  ------------------
 |- route
@@ -109,7 +111,7 @@ Adicione o `--auth` para indicar que a rota precisa de um token de autenticaçã
 ```
 
 ### Observações
-Não é possivel ter dois arquivos com o mesmo metodo na mesma pasta. Então a **index** e a **show** não podem ficar na mesma pasta e no mesmo arquivo **actions.yalm**
+Não é possível ter dois arquivos com o mesmo método na mesma pasta. Então a **index** e a **show** não podem ficar na mesma pasta e no mesmo arquivo **actions.yalm**
 
 ### Actions
 
@@ -120,10 +122,8 @@ Não é possivel ter dois arquivos com o mesmo metodo na mesma pasta. Então a *
 - `destroy` gera um arquivo com o método delete e com o status code 204
 
 ### Renomear os nomes dos arquivos
-```
 - `php artisan docs:route route/:id store --name=login` gera um arquivo com o método post, mas com o nome login.yaml
 - `php artisan docs:route route/:id store show --name=login --name=me` gera um arquivo com o método post, mas com o nome login.yaml e um arquivo no método get com o nome me.yaml
-```
 
 Cada nome deve ser passado utilizando o `--name=` e na mesma ordem que foi informado as actions
 
@@ -134,16 +134,12 @@ Por padrão os métodos que serão autenticados precisam estar acompanhados do `
 
 Quando for informado, o código de autenticação sera inserido na Action informada
 
-```
 - `php artisan docs:route routePath index store show update destroy --a` adiciona o autenticador nos arquivos de cada Action informada
 - `php artisan docs:route routePath index -a` adiciona o autenticador somente no método informado
-```
 
 ## Notas de atualização
 As notas de atualização servem para armazenar o histórico de atualização de sua documentação
 
 ### Como rodar
-```
 - `php artisan docs:patch nome` irá criar estrutura da nota de atualização
 - `php artisan docs:patch nome --routes=2` irá a estrutura da nota de atualização com descrição para duas rotas
-```
